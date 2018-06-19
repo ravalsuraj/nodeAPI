@@ -19,16 +19,9 @@ exports.send_employee = function (req, res) {
 };
 
 exports.send_xml = function(req, res){
-  var value = req.params.value;
-  //res.type('application/xml');
+  var employeeID = req.params.value;
   res.set('Content-Type', 'application/xml');
-  res.send(o2x({
-    '?xml version="1.0" encoding="utf-8"?': null,
-    employees: {
-      employeeID: value,
-      employeeName: "suraj"
-    }
-  }));
+  res.send(o2x({ '?xml version="1.0" encoding="utf-8"?': null, employeeID}));
   
 }
 
