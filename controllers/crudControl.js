@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Account = mongoose.model('Accounts');
 var Customer = mongoose.model('Customers');
-var xml = require('xml');
+var o2x = require('object-to-xml');
 
 exports.send_greeting = function(req, res){
   res.send({message:"Welcome to the Suraj Raval's API"});
@@ -20,9 +20,16 @@ exports.send_employee = function (req, res) {
 
 exports.send_xml = function(req, res){
   var value = req.params.value;
-  const names = { employeeID: value};
-  res.type('application/xml');
-  res.send(xml(names));
+  //res.type('application/xml');
+  res.set('Content-Type', 'application/xml');
+  res.send(o2x({
+    '?xml version="1.0" encoding="utf-8"?': null,
+    employees: {
+      employeeID: value,
+      employeeName: "suraj"
+    }
+  }));
+  
 }
 
 exports.send_employees = function (req, res) {
