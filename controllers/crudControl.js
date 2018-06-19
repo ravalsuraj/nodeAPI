@@ -19,9 +19,19 @@ exports.send_employee = function (req, res) {
 };
 
 exports.send_xml = function(req, res){
-  var employeeID = req.params.value;
+  const empId = req.params.employeeId;
+  let response ={responseCode:"",employeeID:""};
+
+  if (empId == "1234" || empId == "5643") {
+   
+    response.responseCode=0;
+    response.employeeID = empId;
+  }
+  else{
+    response.responseCode = 40;
+  }
   res.set('Content-Type', 'application/xml');
-  res.send(o2x({ '?xml version="1.0" encoding="utf-8"?': null, employeeID}));
+  res.send(o2x({ '?xml version="1.0" encoding="utf-8"?': null, response}));
   
 }
 
