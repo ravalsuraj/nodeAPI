@@ -19,6 +19,9 @@ router.route('/employee/')
 router.route('/employee/:employeeId')
   .get(crudControl.send_employee);
 
+router.route('/xml/:value')
+  .get(crudControl.send_xml);
+
 //API Routes for Accounts
 
   router.route('/accounts')

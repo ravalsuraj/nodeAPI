@@ -16,7 +16,8 @@
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
-    "pug": "^2.0.0-rc.3"
+    "pug": "^2.0.0-rc.3",
+    "xml": "^1.0.1"
   },
   "devDependencies": {},
   "scripts": {

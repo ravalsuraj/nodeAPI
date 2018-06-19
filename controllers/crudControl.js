@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Account = mongoose.model('Accounts');
 var Customer = mongoose.model('Customers');
-
+var xml = require('xml');
 
 exports.send_greeting = function(req, res){
   res.send({message:"Welcome to the Suraj Raval's API"});
@@ -16,8 +16,14 @@ exports.send_employee = function (req, res) {
   else{
     res.json({"responseCode":"40"});
   }
-  
 };
+
+exports.send_xml = function(req, res){
+  var value = req.params.value;
+  const names = { employeeID: value};
+  res.type('application/xml');
+  res.send(xml(names));
+}
 
 exports.send_employees = function (req, res) {
   
