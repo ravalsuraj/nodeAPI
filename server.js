@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
-
+require("body-parser-xml")(bodyParser);
 const Account = require('./models/account');
 const Customer = require('./models/customer');
 
 const apiRouter = require('./routes/apiRouter');
 const webRouter = require('./routes/webRouter');
 
-const crudControl = require('./controllers/crudControl');
+const apiControl = require('./controllers/apiControl');
 
 //Connect to the Database
 //mongoose.connect('mongodb://localhost:27017/srdesignstudio');
@@ -19,7 +19,8 @@ const crudControl = require('./controllers/crudControl');
 // Create our Express application
 var app = express();
 app.use(morgan('dev')); // log every request to the console
-app.use(bodyParser.urlencoded({extended:true}));
+//app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.xml());
 
 // view engine and resource setup
 app.use(express.static(__dirname + '/public'));
@@ -37,7 +38,7 @@ var router = express.Router();
 //apiRouter(app);
 
 // Register all our routes with /api
-app.use('/api', apiRouter);
+//app.use('/api', apiRouter);
 app.use('/', apiRouter);
 
 // Start the server

@@ -1,49 +1,52 @@
-'use strict';
-var express = require('express');
+"use strict";
+var express = require("express");
 var router = express.Router();
 
-var crudControl = require('../controllers/crudControl');
-var authControl = require('../controllers/authControl');
+var apiControl = require("../controllers/apiControl");
+var authControl = require("../controllers/authControl");
 
-router.use(function timeLog (req, res, next) {
-  next()
+router.use(function timeLog(req, res, next) {
+  next();
 });
-// crudControl API Routes
+// apiControl API Routes
 
-  router.route('/')
-    .get(crudControl.send_greeting);
+router.route("/").get(apiControl.send_greeting);
 
-router.route('/employee/')
-  .get(crudControl.send_employees);
+router.route("/employee/").get(apiControl.send_employees);
 
-router.route('/employee/:employeeId')
-  .get(crudControl.send_employee);
+router.route("/employee/:employeeId").get(apiControl.send_employee);
 
-router.route('/xml/:employeeId')
-  .get(crudControl.send_xml);
+router
+  .route("/xml/:employeeId")
+  .get(apiControl.send_xml_employee)
+  .post(apiControl.add_xml_employee);
 
+router.route("/callInfo/").post(apiControl.send_callInfo);
 //API Routes for Accounts
 
-  router.route('/accounts')
-  .post(crudControl.create_account)
+router
+  .route("/accounts")
+  .post(apiControl.create_account)
   //TODO: do not include get method in production API
-  .get(authControl.isValidAccount, crudControl.read_accounts);
+  .get(authControl.isValidAccount, apiControl.read_accounts);
 
-  router.route('/accounts/:accountId')
-    //TODO: do not include get method in production API
-    .get(authControl.isValidAccount, crudControl.read_account)
-    .put(authControl.isValidAccount, crudControl.update_account)
-    .delete(authControl.isValidAccount, crudControl.delete_account);
+router
+  .route("/accounts/:accountId")
+  //TODO: do not include get method in production API
+  .get(authControl.isValidAccount, apiControl.read_account)
+  .put(authControl.isValidAccount, apiControl.update_account)
+  .delete(authControl.isValidAccount, apiControl.delete_account);
 
 //API Routes for Customers
-  router.route('/customers')
-    .post(authControl.isValidAccount, crudControl.create_customer)
-    .get(authControl.isValidAccount, crudControl.read_customers);
+router
+  .route("/customers")
+  .post(authControl.isValidAccount, apiControl.create_customer)
+  .get(authControl.isValidAccount, apiControl.read_customers);
 
-  router.route('/customers/:customerId')
-    .get(authControl.isValidAccount, crudControl.read_customer)
-    .put(authControl.isValidAccount, crudControl.update_customer)
-    .delete(authControl.isValidAccount, crudControl.delete_customer);
-
+router
+  .route("/customers/:customerId")
+  .get(authControl.isValidAccount, apiControl.read_customer)
+  .put(authControl.isValidAccount, apiControl.update_customer)
+  .delete(authControl.isValidAccount, apiControl.delete_customer);
 
 module.exports = router;
